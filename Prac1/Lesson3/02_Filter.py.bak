@@ -1,0 +1,72 @@
+import cv2
+
+# 定义常量，表示不同的滤镜模式
+PREVIEW  = 0  # Preview Mode
+BLUR     = 1  # Blurring Filter
+CANNY    = 2  # Canny Edge Detector
+
+s = 0
+
+# 设置默认滤镜模式
+image_filter = PREVIEW
+#image_filter = CANNY
+#image_filter = BLUR
+
+alive = True
+
+# 设置窗口名，创建窗口
+win_name = "Camera Filters"
+cv2.namedWindow(win_name, cv2.WINDOW_NORMAL)
+result = None
+
+# 打开摄像头，获取视频流
+source = cv2.VideoCapture(s)
+
+# while循环
+while alive:
+    # 获取视频帧
+    has_frame, frame = source.read()
+
+    # 如果没有视频帧，退出循环
+    if not has_frame:
+        break
+    
+    # 翻转视频帧
+    frame = cv2.flip(frame, 1)
+
+    # 处理视频帧
+    # 预览模式，直接显示原图
+    if image_filter == PREVIEW:
+        result = frame
+
+    # 边缘检测模式，使用Canny边缘检测,参数为(80,150)，表示低阈值和高阈值
+    elif image_filter == CANNY:
+        result = cv2.Canny(frame, 80, 150)
+
+    # 滤波模式，使用高斯模糊滤波，参数为(13,13)，表示高斯核大小       
+    elif image_filter == BLUR:
+        result = cv2.blur(frame, (13, 13))
+
+    # 显示结果  
+    cv2.imshow(win_name, result)
+
+    # 获取键盘输入
+    key = cv2.waitKey(1)
+    # 按下“Q”或“q”或Esc键，退出循环
+    if key == ord("Q") or key == ord("q") or key == 27:
+        alive = False
+    
+    # 按下“C”或“c”键，切换到Canny边缘检测模式    
+    elif key == ord("C") or key == ord("c"):
+        image_filter = CANNY
+    
+    # 按下“B”或“b”键，切换到高斯模糊滤波模式    
+    elif key == ord("B") or key == ord("b"):
+        image_filter = BLUR
+
+    # 按下“P”或“p”键，切换到预览模式
+    elif key == ord("P") or key == ord("p"):
+        image_filter = PREVIEW
+
+source.release()  # 释放摄像头
+cv2.destroyWindow(win_name)  # 关闭窗口
