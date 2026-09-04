@@ -1,6 +1,6 @@
 # 无人机创新——视觉基础
 
-### Fundamentals of Computer Vision (Drone Innovation) in HITWH
+### Fundamentals of Computer Vision 
 
 哈尔滨工业大学（威海）于 2026 年春季学期面向大一本科生推出校级跨专业知识体系选修课程《无人机创新——具身智能基础》。该课程为首次开设，暂无公开配套学习资源，因此本仓库整理收录了课程的全部实验指导手册、实验源码、实验数据、过程与结果图像以及实验汇报 PPT，可供后续选课同学参考使用。
 
